@@ -1,6 +1,7 @@
 import Home from './components/Home.vue';
 import Users from './components/User/List.vue';
 import AddUser from './components/User/Add.vue';
+import EditUser from './components/User/Edit.vue';
 
 export const routes = [
     //HOME
@@ -21,4 +22,9 @@ export const routes = [
         path: '/users/add',
         component: AddUser
     },
+    {
+        name: 'editUser',
+        path: '/users/edit/:id',
+        component: EditUser
+    }
 ];

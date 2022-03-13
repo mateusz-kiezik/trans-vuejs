@@ -56,6 +56,7 @@
                                 label="Role"
                                 :rules="roleRules"
                                 required
+                                disabled
                             ></v-select>
                         </v-col>
                     </v-row>
@@ -69,6 +70,18 @@
                                 @click="validate"
                             >
                                 SAVE
+                            </v-btn>
+
+
+                        </v-col>
+
+                        <v-col cols="1">
+                            <v-btn
+                                to="/users"
+                                color="primary"
+                                class="mr-4"
+                            >
+                                CANCEL
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -84,17 +97,12 @@
 
 <script>
 export default {
-    name: 'addUser',
+    name: 'editUser',
     data() {
         return {
-            title: 'NEW USER',
+            title: 'EDIT USER',
             valid: false,
-            user: {
-                name: '',
-                email: '',
-                phone: '',
-                role: null,
-            },
+            user: {},
             nameRules: [
                 v => !!v || 'Name is required',
                 v => (v && v.length <= 40) || 'Name must be less than 40 characters'
@@ -116,14 +124,22 @@ export default {
             ]
         }
     },
+    mounted() {
+        this.getUser(this.$route.params.id);
+    },
     methods: {
         validate() {
             this.$refs.form.validate();
             this.axios
-                .post('/api/users/new', this.user).then(response=>{
-                    this.$router.push({name: 'users'})
+                .post('/api/user/update', this.user).then(response => {
+                this.$router.push({name: 'users'})
             }).catch(error=>{
                 console.log(error)
+            })
+        },
+        async getUser(id) {
+            await this.axios.get('/api/user/' + id).then(response => {
+                this.user = response.data
             })
         }
     }

@@ -2,6 +2,10 @@
     <v-container fluid>
         <v-card>
 
+            <v-alert :value="showAlert" type="success">
+                TEST ALERT
+            </v-alert>
+
             <v-card-title>
                 {{ title }}
                 <v-spacer></v-spacer>
@@ -48,6 +52,7 @@ export default {
             message: null,
             title: 'USERS',
             tab: null,
+            showAlert: false,
             items: [
                 {tab: 'All', content: 'All'},
                 {tab: 'Admins', content: 'Admins'},
