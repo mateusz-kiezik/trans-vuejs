@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name: 'userUsers',
+    name: 'userAdmins',
     data() {
         return {
             loadingTable: true,
@@ -76,7 +76,7 @@ export default {
     },
     methods: {
         async getUsers() {
-            await this.axios.get('/api/users/1').then(response => {
+            await this.axios.get('/api/users/3').then(response => {
                 this.users = response.data
                 this.loadingTable = false
             }).catch(error => {

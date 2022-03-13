@@ -1,28 +1,28 @@
 <template>
     <v-app>
-        <v-navigation-drawer app>
+<!--        <v-navigation-drawer app>-->
 
-        </v-navigation-drawer>
+<!--        </v-navigation-drawer>-->
 
         <v-app-bar app>
             <router-link to="/">
                 <v-img
                     class="me-5"
                     src="https://viral.com.pl/image/logo.png"
-                    max-height="100"
-                    max-width="100"
+                    max-height="80"
+                    max-width="80"
                     contain
                 ></v-img>
             </router-link>
 
             <v-btn to="/" text>
                 <v-icon left>mdi-home</v-icon>
-                HOME
+                Home
             </v-btn>
 
             <v-btn to="/users" text>
                 <v-icon left>mdi-account-multiple</v-icon>
-                USERS
+                Users
             </v-btn>
 
         </v-app-bar>

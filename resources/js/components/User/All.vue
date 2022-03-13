@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name: 'userUsers',
+    name: 'userAll',
     data() {
         return {
             loadingTable: true,
@@ -67,6 +67,7 @@ export default {
                 {text: 'Email', value: 'email', divider: true },
                 {text: 'Phone', value: 'phone', sortable: false, divider: true },
                 {text: 'Company', value: 'company', divider: true },
+                {text: 'Role', value: 'role', sortable: false }
             ],
             users: []
         }
@@ -76,7 +77,7 @@ export default {
     },
     methods: {
         async getUsers() {
-            await this.axios.get('/api/users/1').then(response => {
+            await this.axios.get('/api/users/').then(response => {
                 this.users = response.data
                 this.loadingTable = false
             }).catch(error => {

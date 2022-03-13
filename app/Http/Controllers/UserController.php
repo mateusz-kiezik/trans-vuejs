@@ -7,38 +7,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(User $user)
-    {
-        //
-    }
-
-    public function edit(User $user)
-    {
-        //
-    }
-
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    public function destroy(User $user)
-    {
-        //
+    public function getUsers($role = null) {
+        if (!empty($role)) {
+            $users = User::where('role', $role)->get();
+        } else {
+            $users = User::all();
+        }
+        return response()->json($users);
     }
 }
