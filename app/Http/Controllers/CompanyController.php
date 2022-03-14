@@ -24,4 +24,9 @@ class CompanyController extends Controller
             'message' => 'New company created successfully'
         ]);
     }
+
+    public function getCompaniesSelect() {
+        $companies = Company::all('id', 'name', 'tax_number', 'country');
+        return response()->json($companies);
+    }
 }

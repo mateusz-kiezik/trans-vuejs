@@ -16,7 +16,8 @@
             <v-card-title>
                 {{ title }}
                 <v-spacer></v-spacer>
-                <v-btn to="/users/add" color="primary" depressed>ADD</v-btn>
+<!--                <v-btn to="/users/add" color="primary" depressed>ADD</v-btn>-->
+                <v-btn to="/user/new" color="primary" depressed>ADD</v-btn>
             </v-card-title>
 
             <v-tabs v-model="tab">
@@ -87,7 +88,7 @@ export default {
         },
         closeAlert(toggle) {
             toggle()
-        }
+        },
     }
 }
 </script>
