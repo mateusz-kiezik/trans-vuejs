@@ -1,4 +1,5 @@
 <template>
+
     <v-data-table
         :headers="headers"
         :items="users"
@@ -10,36 +11,58 @@
 
         <template v-slot:item.actions="{ item }">
 
-            <v-btn :to='{name: "editUser", params: {id: item.id}}' icon>
-                <v-icon>mdi-pencil</v-icon>
-            </v-btn>
+            <v-tooltip left>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        :to='{name: "editUser", params: {id: item.id}}'
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
+                </template>
+                <span>Edit</span>
+            </v-tooltip>
 
-            <v-btn icon @click="deleteUser(item.id)">
-                <v-icon>mdi-delete</v-icon>
-            </v-btn>
+            <v-tooltip right>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        @click="deleteUser(item.id)"
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                </template>
+                <span>Delete</span>
+            </v-tooltip>
 
         </template>
     </v-data-table>
+
 </template>
 
 <script>
-import Admins from './Admins.vue';
-import Forwarders from './Forwarders.vue';
-import Users from './Users.vue';
+import { bus } from '../../app.js';
 
 export default {
     name: 'userAll',
+    props: {
+        'refreshComponents': {type: Boolean}
+    },
     data() {
         return {
             loadingTable: true,
             emptyTableText: 'No data to show',
             loadingTableText: "Loading... Please wait",
             headers: [
-                {text: 'Name', value: 'name', divider: true },
-                {text: 'Email', value: 'email', divider: true },
-                {text: 'Phone', value: 'phone', sortable: false, divider: true },
-                {text: 'Company', value: 'company', divider: true },
-                {text: 'Role', value: 'role', sortable: false, divider: true },
+                {text: 'Name', value: 'name', divider: true},
+                {text: 'Email', value: 'email', divider: true},
+                {text: 'Phone', value: 'phone', sortable: false, divider: true},
+                {text: 'Company', value: 'company_data.name', divider: true},
+                {text: 'Role', value: 'role_data.name', sortable: false, divider: true},
                 {text: 'Actions', value: 'actions', sortable: false}
             ],
             users: []
@@ -47,7 +70,10 @@ export default {
     },
     beforeMount() {
         this.getUsers()
-        this.$root.$refs.All = this
+
+        bus.$on('refreshComponents', event => {
+            this.getUsers()
+        })
     },
     methods: {
         async getUsers() {
@@ -62,11 +88,8 @@ export default {
         deleteUser(userId) {
             if (confirm('Are you sure to delete this user?')) {
                 this.axios.post('/api/user/delete', {id: userId}).then(response => {
-                    this.getUsers()
-                    this.$root.$refs.Forwarders.getUsers()
-                    this.$root.$refs.Users.getUsers()
-                    this.$root.$refs.Admins.getUsers()
-
+                    this.$emit('refresh')
+                    this.$emit('showAlert', response.data['message'])
                 }).catch(error => {
                     console.log(error)
                 })

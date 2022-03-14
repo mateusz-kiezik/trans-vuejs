@@ -22,9 +22,15 @@ Route::middleware('api')->group(function () {
     Route::controller(UserController::class)->group(function() {
         Route::get('/users/{role?}', 'getUsers');
         Route::post('/users/new', 'newUser');
+        Route::post('user/new', 'createUser');
         Route::get('/user/{id}', 'getUser');
         Route::post('/user/update', 'updateUser');
         Route::post('/user/delete', 'deleteUser');
+    });
+
+    Route::controller(CompanyController::class)->group(function() {
+        Route::post('/company/new', 'newCompany');
+        Route::get('/companies-base', 'getCompaniesSelect');
     });
 });
 
