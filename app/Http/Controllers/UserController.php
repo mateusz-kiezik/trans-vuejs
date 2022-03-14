@@ -6,15 +6,21 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\Console\Input\Input;
 
 class UserController extends Controller
 {
     public function getUsers($role = null) {
         if (!empty($role)) {
-            $users = User::where('role', $role)->where('status', 1)->get();
+            $users = User::where('role', $role)
+                ->with('companyData')
+                ->with('roleData')
+                ->where('status', 1)
+                ->get();
         } else {
-            $users = User::where('status', 1)->get();
+            $users = User::where('status', 1)
+                ->with('companyData')
+                ->with('roleData')
+                ->get();
         }
         return response()->json($users);
     }

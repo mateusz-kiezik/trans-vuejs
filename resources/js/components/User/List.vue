@@ -2,8 +2,15 @@
     <v-container fluid>
         <v-card>
 
-            <v-alert :value="showAlert" type="success">
-                TEST ALERT
+            <v-alert
+                :value="alert"
+                type="success"
+                transition="scroll-y-reverse-transition"
+            >
+                {{ message }}
+                <template v-slot:close="{ toggle }">
+                    <v-icon @click="closeAlert(toggle)">mdi-close-circle</v-icon>
+                </template>
             </v-alert>
 
             <v-card-title>
@@ -23,7 +30,11 @@
                 <v-tab-item v-for="item in items" :key="item.tab">
                     <v-card flat>
                         <v-card-text>
-                            <component :is="item.content"></component>
+                            <component
+                                :is="item.content"
+                                v-on:showAlert="showAlert"
+                                v-on:refresh="refreshComponents"
+                            ></component>
                         </v-card-text>
                     </v-card>
                 </v-tab-item>
@@ -38,6 +49,7 @@ import All from './All.vue';
 import Admins from './Admins.vue';
 import Forwarders from './Forwarders.vue';
 import Users from './Users.vue';
+import { bus } from '../../app.js';
 
 export default {
     name: 'users',
@@ -52,13 +64,29 @@ export default {
             message: null,
             title: 'USERS',
             tab: null,
-            showAlert: false,
+            alert: false,
             items: [
                 {tab: 'All', content: 'All'},
                 {tab: 'Admins', content: 'Admins'},
                 {tab: 'Forwarders', content: 'Forwarders'},
                 {tab: 'Users', content: 'Users'}
             ]
+        }
+    },
+    methods: {
+        showAlert(message) {
+            this.message = message
+            this.alert = true
+            setTimeout(()=> {
+                this.alert = false
+                this.message = null
+            }, 3000)
+        },
+        refreshComponents() {
+            bus.$emit('refreshComponents')
+        },
+        closeAlert(toggle) {
+            toggle()
         }
     }
 }

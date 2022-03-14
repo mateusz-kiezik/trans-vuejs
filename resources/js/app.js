@@ -40,6 +40,8 @@ const router = new VueRouter({
     routes: routes
 });
 
+export const bus = new Vue();
+
 const app = new Vue({
     vuetify,
     el: '#app',

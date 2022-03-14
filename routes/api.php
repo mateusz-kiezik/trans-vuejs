@@ -26,6 +26,10 @@ Route::middleware('api')->group(function () {
         Route::post('/user/update', 'updateUser');
         Route::post('/user/delete', 'deleteUser');
     });
+
+    Route::controller(CompanyController::class)->group(function() {
+        Route::post('/company/new', 'newCompany');
+    });
 });
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

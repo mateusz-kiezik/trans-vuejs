@@ -1,7 +1,9 @@
-import Home from './components/Home.vue';
-import Users from './components/User/List.vue';
-import AddUser from './components/User/Add.vue';
-import EditUser from './components/User/Edit.vue';
+import Home from './components/Home';
+import Users from './components/User/List';
+import AddUser from './components/User/Add';
+import EditUser from './components/User/Edit';
+import Companies from './components/Company/List';
+import AddCompany from './components/Company/Add';
 
 export const routes = [
     //HOME
@@ -26,5 +28,17 @@ export const routes = [
         name: 'editUser',
         path: '/users/edit/:id',
         component: EditUser
-    }
+    },
+
+    //COMPANY
+    {
+        name: 'companies',
+        path: '/companies',
+        component: Companies
+    },
+    {
+        name: 'addCompany',
+        path: '/companies/add',
+        component: AddCompany
+    },
 ];

@@ -25,6 +25,11 @@
                 Users
             </v-btn>
 
+            <v-btn to="/companies" text>
+                <v-icon left>mdi-home-city</v-icon>
+                Companies
+            </v-btn>
+
         </v-app-bar>
 
 
